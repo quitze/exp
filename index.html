@@ -15,17 +15,17 @@
     var jP = initJsPsych();
 
     /* create timeline */
-    var timeline = [];
+    var tl = [];
 
     /* define welcome message trial */
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "Welcome to the experiment. Press any key to begin."
+      stimulus: "Welcome to the exp. Press any key to begin."
     };
-    timeline.push(welcome);
+    tl.push(welcome);
 
     /* start the experiment */
-    jP.run(timeline);
+    jP.run(tl);
 
   </script>
 </html>
