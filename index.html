@@ -12,11 +12,7 @@
   <script>
 
     /* initialize jsPsych */
-    var jsPsych = initJsPsych({
-      on_finish: function() {
-        jsPsych.data.displayData();
-      }
-    });
+    var jsPsych = initJsPsych();
 
     /* create timeline */
     var timeline = [];
@@ -26,9 +22,6 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: "Welcome to the experiment. Press any key to begin."
     };
-    timeline.push(welcome);
-
-    
     timeline.push(welcome);
 
     /* start the experiment */
