@@ -32,7 +32,7 @@
     /* define welcome message trial */
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "Welcome to the experiment. Press any key to begin. save"
+      stimulus: "Welcome to the experiment. Press any key to begin. save 2"
     };
     timeline.push(welcome);
 
@@ -124,11 +124,11 @@
   type: jsPsychPipe,
   action: "save",
   experiment_id: "IlwoCcZz03zg",
-  filename: `blg.csv`,
+  filename: `blg00.csv`,
   data_string: ()=>jsPsych.data.get().csv()
 };
 
-    timeline.push(save_data);
+    /*timeline.push(save_data);*/
     
     /* start the experiment */
     jsPsych.run(timeline);
