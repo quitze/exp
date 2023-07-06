@@ -120,7 +120,7 @@
   const filename = `${subject_id}.csv`;
 
 
-    const save_data = {
+  const save_data = {
   type: jsPsychPipe,
   action: "save",
   experiment_id: "IlwoCcZz03zg",
@@ -128,6 +128,7 @@
   data_string: ()=>jsPsych.data.get().csv()
 };
 
+    timeline.push(save_data);
     
     /* start the experiment */
     jsPsych.run(timeline);
