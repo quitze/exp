@@ -12,13 +12,19 @@
   <body></body>
   <script>
 
-    /* initialize jsPsych */
+    /* initialize jsPsych 
     var jsPsych = initJsPsych({
       on_finish: function() {
         jsPsych.data.displayData();
       }
-    });
+    });*/
 
+
+
+        var jsPsych = initJsPsych();
+
+
+    
     /* create timeline */
     var timeline = [];
 
@@ -93,7 +99,7 @@
     var test_procedure = {
       timeline: [fixation, test],
       timeline_variables: test_stimuli,
-      repetitions: 5,
+      repetitions: 2,
       randomize_order: true
     };
     timeline.push(test_procedure);
