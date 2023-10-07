@@ -12,133 +12,789 @@
   <body></body>
   <script>
 
-    /* initialize jsPsych 
-    var jsPsych = initJsPsych({
-      on_finish: function() {
-        jsPsych.data.displayData();
-      }
-    });*/
+
+//////////////////////////////////////////////
+///////// Experimento Tesis Rebe /////////////
+//////////////////////////////////////////////
+
+// Claridad del recuerdo = objetos congruentes e incongruentes con el contexto
+// Versión jsPsych 7.3.1
+//version Obsecene 15/09/23
+
+///////Por limitaciones de cognition//////////////
+////// la tarea está separada por ahora //////////
+///// este es el código completo sin los estímulos cargados de la fase 2//////////
+///////5-10-23////////////////////////
+
+//////////////////////////////////////////////
+///////// TIMELINE Y PRELOAD ////////////////
+//////////////////////////////////////////////
+
+// Se crea la variable de timeline
+var timeline = [];
+
+// Se inicializa jsPsych y se presentan los datos al finalizar el experimento
+var jsPsych = initJsPsych({
+    on_finish: function() {
+      jsPsych.data.displayData();
+    }
+});
+//var jsPsych = initJsPsych();
+
+/* Se genera un ID para cada participante de forma aleatoria con 8 caracteres alfanuméricos */
+
+var rand_subject_id = jsPsych.randomization.randomID(8);
+/* Agregar el ID del participante a los datos de cada ensayo */
+jsPsych.data.addProperties({ID: rand_subject_id});
 
 
+//se crea el primer ramdom Condition de las opciones para la fase de exposición 
+var primer_random = jsPsych.randomization.sampleWithoutReplacement([1, 2], 1)[0];
 
-    var jsPsych = initJsPsych({});
+jsPsych.data.addProperties({condición_fase_1: primer_random});
 
+// Se crea la variable "imagenes" para cargarlas antes del experimento
+var imagenes = ["CONSENTIMIENTO.jpg","BIENVENIDA.jpg","INSTRUCCIONES.jpg","INSTRUCCIONES_b_1.jpg","INSTRUCCIONES_b_2.jpg",
+"airplane_interior_A.jpg","art_gallery_A.jpg","bakery_A.jpg","ballet_room_A.jpg","bar_A.jpg","bedroom_B.jpg","boat_interior_A.jpg","boxing_ring_A.jpg","building_stairs_B.jpg","car_interior_A.jpg","casino_B.jpg","childrens_room_A.jpg","church_B.jpg","classroom_A.jpg","clinic_A.jpg","flower_shop_B.jpg","gymnasium_A.jpg","hair_salon_A.jpg","hospital_room_A.jpg","hotel_lobby_B.jpg","ice_rink_B.jpg","jewelery_A.jpg","kitchen_B.jpg","laboratory_B.jpg","laundry_A.jpg","library_A.jpg","living_room_B.jpg","meeting_room_B.jpg","movie_theater_A.jpg","museum_B.jpg","office_work_B.jpg","orchard_B.jpg","painting_workshop_B.jpg",
+"parking_lot_B.jpg","prison_A.jpg","public_toilet_A.jpg","restaurant_A.jpg","sewing_workshop_B.jpg","shoe_store_A.jpg","shopping_center_B.jpg","theater_A.jpg","vault_A.jpg","waiting_room_A.jpg","warehouse_A.jpg",
 
-    
-    /* create timeline */
-    var timeline = [];
+"airplane_interior_A_CON.jpg","art_gallery_A_INC.jpg","bakery_A_CON.jpg","ballet_room_A_INC.jpg","bar_A_CON.jpg","bedroom_B_INC.jpg","boat_interior_A_INC.jpg","boxing_ring_A_CON.jpg","building_stairs_B_CON.jpg","car_interior_A_INC.jpg","casino_B_CON.jpg","childrens_room_A_INC.jpg","church_B_INC.jpg","classroom_A_CON.jpg","clinic_A_CON.jpg","flower_shop_B_CON.jpg","gymnasium_A_CON.jpg","hair_salon_A_CON.jpg","hospital_room_A_INC.jpg","hotel_lobby_B_CON.jpg","ice_rink_B_CON.jpg","jewelery_A_CON.jpg","kitchen_B_CON.jpg","laboratory_B_INC.jpg","laundry_A_INC.jpg","library_A_INC.jpg","living_room_B_INC.jpg","meeting_room_B_CON.jpg","movie_theater_A_INC.jpg","museum_B_INC.jpg","office_work_B_INC.jpg","orchard_B_INC.jpg","painting_workshop_B_CON.jpg",
+"parking_lot_B_INC.jpg","prison_A_INC.jpg","public_toilet_A_CON.jpg","restaurant_A_CON.jpg","sewing_workshop_B_CON.jpg","shoe_store_A_CON.jpg","shopping_center_B_INC.jpg","theater_A_CON.jpg","vault_A_INC.jpg","waiting_room_A_CON.jpg","warehouse_A_INC.jpg",
 
-    /* preload images */
-    var preload = {
-      type: jsPsychPreload,
-      images: ['img/blue.png', 'img/orange.png']
-    };
-    timeline.push(preload);
+"beach_A.jpg","beach_A_CON.jpg","basketball_field_A.jpg","basketball_field_A_INC.jpg",
 
-    /* define welcome message trial */
-    var welcome = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: "Welcome to the experiment. Press any key to begin. save 2"
-    };
-    timeline.push(welcome);
+"instrucciones_t.jpg","instrucciones_t_1.jpg","instrucciones_t_2.jpg","instrucciones_t_3.jpg","objeto_1.jpg","objeto_2.jpg",
 
-    /* define instructions trial */
-    var instructions = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `
-        <p>In this experiment, a circle will appear in the center 
-        of the screen.</p><p>If the circle is <strong>blue</strong>, 
-        press the letter F on the keyboard as fast as you can.</p>
-        <p>If the circle is <strong>orange</strong>, press the letter J 
-        as fast as you can.</p>
-        <div style='width: 700px;'>
-        <div style='float: left;'><img src='img/blue.png'></img>
-        <p class='small'><strong>Press the F key</strong></p></div>
-        <div style='float: right;'><img src='img/orange.png'></img>
-        <p class='small'><strong>Press the J key</strong></p></div>
-        </div>
-        <p>Press any key to begin.</p>
-      `,
-      post_trial_gap: 2000
-    };
-    timeline.push(instructions);
+"armchair_SIMILAR.jpg","bikini_SIMILAR.jpg","binoculars_SIMILAR.jpg","bottle_SIMILAR.jpg","boxing_glove_SIMILAR.jpg","clock_SIMILAR.jpg","dice_SIMILAR.jpg","fork_SIMILAR.jpg","grater_SIMILAR.jpg","hairdryer_SIMILAR.jpg","jar_SIMILAR.jpg","jewelry_box_SIMILAR.jpg","poker_chips_SIMILAR.jpg","racket_SIMILAR.jpg","rolling_pin_SIMILAR.jpg","roman_helmet_SIMILAR.jpg","saw_SIMILAR.jpg","scooter_SIMILAR.jpg","tiara_SIMILAR.jpg","weights_SIMILAR.jpg","whelk_SIMILAR.jpg","whistle_SIMILAR.jpg",
 
-    /* define trial stimuli array for timeline variables */
-    var test_stimuli = [
-      { stimulus: "img/blue.png",  correct_response: 'f'},
-      { stimulus: "img/orange.png",  correct_response: 'j'}
-    ];
+"brocha_NUEVO.jpg","calcetas_NUEVO.jpg","casco_bici_NUEVO.jpg","cepillo_NUEVO.jpg","chupon_NUEVO.jpg","cup_NUEVO.jpg","engrapadora_NUEVO.jpg","googles_NUEVO.jpg","gorra_NUEVO.jpg","guante_cocina_NUEVO.jpg","licuadora_NUEVO.jpg","linterna_NUEVO.jpg","marco_NUEVO.jpg","muñeca_NUEVO.jpg","palita_NUEVO.jpg","pandero_NUEVO.jpg","pinzas_NUEVO.jpg","piña_NUEVO.jpg","silla_NUEVO.jpg","sombrero_NUEVO.jpg","tazon_NUEVO.jpg","vela_NUEVO.jpg",
 
-    /* define fixation and test trials */
-    var fixation = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: '<div style="font-size:60px;">+</div>',
-      choices: "NO_KEYS",
-      trial_duration: function(){
-        return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
-      },
-      data: {
-        task: 'fixation'
-      }
-    };
-
-    var test = {
-      type: jsPsychImageKeyboardResponse,
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      choices: ['f', 'j'],
-      data: {
-        task: 'response',
-        correct_response: jsPsych.timelineVariable('correct_response')
-      },
-      on_finish: function(data){
-        data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
-      }
-    };
-
-    /* define test procedure */
-    var test_procedure = {
-      timeline: [fixation, test],
-      timeline_variables: test_stimuli,
-      repetitions: 2,
-      randomize_order: true
-    };
-    timeline.push(test_procedure);
-
-    /* define debrief */
-    var debrief_block = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: function() {
-
-        var trials = jsPsych.data.get().filter({task: 'response'});
-        var correct_trials = trials.filter({correct: true});
-        var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
-        var rt = Math.round(correct_trials.select('rt').mean());
-
-        return `<p>You responded correctly on ${accuracy}% of the trials.</p>
-          <p>Your average response time was ${rt}ms.</p>
-          <p>Press any key to complete the experiment. Thank you!</p>`;
-
-      }
-    };
-    timeline.push(debrief_block);
-
-  const subject_id = jsPsych.randomization.randomID(10);
-  const filename = `${subject_id}.csv`;
+"airplane_belt.jpg","appointment_book.jpg","balloons.jpg","beach_umbrella.jpg","blackboard_eraser.jpg","cactus.jpg","chaplet.jpg","color_palette.jpg","dagger.jpg","emergency_exit_signal.jpg","fire_hydrant.jpg","hose.jpg","ice_skates.jpg","luggage_carrier_cart.jpg","magic_cube.jpg","scythe.jpg","shoe_box.jpg","soap_dispenser.jpg","stethoscope.jpg","thimble.jpg","tragedy_mask.jpg","trampoline.jpg"];
 
 
-  const save_data = {
-  type: jsPsychPipe,
-  action: "save",
-  experiment_id: "IlwoCcZz03zg",
-  /*filename: `blg01.csv`,*/
-  filename: filename,
-  data_string: ()=>jsPsych.data.get().csv()
+//La tarea tarda un poco en cargar, gracias por tu paciencia
+
+var aviso = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p><div style ="font-size: 20px;"><strong> La tarea comenzará a cargarse al dar click en el botón de "continuar", esto puede tardar unos segundos. </p><p>Gracias por tu paciencia. </p></strong></div>',
+  choices: ['CONTINUAR']
 };
 
-    timeline.push(save_data);
-    
-    /* start the experiment */
-    jsPsych.run(timeline);
+timeline.push(aviso);
 
+// Se cargan los elementos de "imagenes" antes de iniciar el experimento
+var preload = {
+    type: jsPsychPreload,
+    images: imagenes
+};
+
+timeline.push(preload);
+
+// Pantalla completa
+timeline.push({
+  type: jsPsychFullscreen,
+  message: "<p>Presiona el botón para cambiar a pantalla completa<p>",
+  button_label:	'CONTINUAR',
+  fullscreen_mode: true
+});
+
+
+//////////////////////////////////////////////////////////////
+///////// CONSENTIMIENTO INFORMADO y BIENVENIDA //////////////
+/////////////////////////////////////////////////////////////
+
+// Agregar código para presentar la imagen del consentimiento INFORMADO
+
+timeline.push({
+  type:jsPsychImageButtonResponse,
+  stimulus: "CONSENTIMIENTO.jpg",
+  stimulus_height: 650,
+  maintain_aspect_ratio: true,
+  choices: ["<div style='font-size: 25px;'>ACEPTO</div>"],
+});
+
+// Texto de BIENVENIDA al experimento
+
+timeline.push({
+  type:jsPsychImageButtonResponse,
+  stimulus: "BIENVENIDA.jpg",
+  stimulus_height: 600,
+  maintain_aspect_ratio: true,
+  choices: ["<div style='font-size: 25px;'>CONTINUAR</div>"],
+});
+
+//////////////////////////////////////////////
+///////// DATOS PARTICIPANTE ////////////////
+//////////////////////////////////////////////
+
+var edad = {
+  type: jsPsychSurveyText,
+   button_label:"CONTINUAR",
+  preamble: "<div style='font-size: 20px;'><strong>¿Cuántos años tienes?</strong></div>",
+  questions: [
+    {
+      prompt: 'Por favor, escribe tu edad en números (ejemplo 22)',
+      name:'edad',
+      required: true,
+    },
+  ]
+};
+
+var genero = {
+  type: jsPsychSurveyMultiChoice,
+  button_label:"CONTINUAR",
+  
+  questions: [
+    {
+      prompt: "<div style='font-size: 20px;'><strong>¿Con qué género te identificas?</strong></div>", 
+      name: 'genero', 
+      options: ['FEMENINO', 'MASCULINO', 'OTRO'], 
+      required: true,
+    }
+  ],
+};
+
+var vision = {
+  type: jsPsychSurveyMultiChoice,
+  button_label:"CONTINUAR",
+  
+  questions: [
+    {
+      prompt: "<div style='font-size: 20px;'><p><strong>Indica si tu visión es Normal o Corregida</strong></p><p>Corregida quiere decir que utilizas lentes o lentes de contacto, tuviste alguna operación para corregirla, etc.</p></div>", 
+      name: 'vision', 
+      options: ['NORMAL', 'CORREGIDA'], 
+      required: true,
+    }
+  ],
+};
+
+var lateralidad = {
+  type: jsPsychSurveyMultiChoice,
+  button_label:"CONTINUAR",
+  
+  questions: [
+    {
+      prompt: "<div style='font-size: 20px;'><strong>¿Cuál es tu mano dominante?</strong><p>Es decir la mano con la que escribes</p></div>", 
+      name: 'lateralidad', 
+      options: ['DERECHA', 'IZQUIERDA', 'AMBAS'], 
+      required: true,
+    }
+  ],
+};
+
+timeline.push(edad,genero,vision,lateralidad);
+
+
+//////////////////////////////////////////////
+///////// INICIA FASE DE EXPOSICIÓN ///////////
+//////////////////////////////////////////////
+
+// Se presenta una imagen con las INSTRUCCIONES del experimento
+
+var instrucciones_contra;
+
+if (primer_random == 1) {
+  instrucciones_contra = "INSTRUCCIONES_b_1.jpg";
+} else if (primer_random == 2) {
+  instrucciones_contra = "INSTRUCCIONES_b_2.jpg";
+}
+
+var instrucciones = {
+  type: jsPsychInstructions,
+  pages: [
+    '<img src="INSTRUCCIONES.jpg" style="width: 900px; height: auto;"></img>',
+    '<br>' + 
+    '<img src="' + instrucciones_contra + '" style="width: 900px; height: auto;"></img>'
+  ],
+  button_label_next: "CONTINUAR",
+  button_label_previous: "ANTERIOR",
+  show_clickable_nav: true,
+  allow_keys: false
+};
+
+
+var inicio_practica = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<div style="font-size:25px;"><strong>Coloca tus dedos sobre las teclas “V” y “N”,</p><p>cuando estés list@, presiona cualquiera de ellas para comenzar la práctica :)</p> </strong></div>',
+  choices: ["v","n"],
+};
+
+timeline.push(instrucciones,inicio_practica);
+
+
+//////Estimulos de práctica con retroalimentación///////////
+
+//Quitar cursor utilizando un estilo css cargado como "no_mouse.css"
+var cursor_off= {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "none";
+
+  }
+};
+timeline.push(cursor_off);
+
+// Cruz de fijación
+var fixation = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<div style="font-size:80px;color:red;">+</div>',
+  choices: "NO_KEYS",
+  trial_duration: 600,
+};
+
+var practica_1 = {
+  type: jsPsychAnimation,
+  stimuli: ["beach_A.jpg", "beach_A_CON.jpg"],
+  frame_time: 1500,
+  choices: "NO_KEYS",
+  render_on_canvas: true
+};
+
+var practica_2 = {
+  type: jsPsychAnimation,
+  stimuli: ["basketball_field_A.jpg", "basketball_field_A_INC.jpg"],
+  frame_time: 1500,
+  choices: "NO_KEYS",
+  render_on_canvas: true
+};
+
+// Definir texto_practica dependiendo de primer_random
+var texto_practica;
+
+if (primer_random == 1) {
+  texto_practica = "<p><strong>CONGRUENTE</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>INCONGRUENTE</strong></p>"
+} else if (primer_random == 2) {
+  texto_practica = "<p><strong>INCONGRUENTE</strong>&nbsp;&nbsp;&nbsp;<strong>CONGRUENTE</strong></p>"
+}
+
+// Mostrar el texto y recoger la respuesta del participante
+var practica_response = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: texto_practica,
+  choices: ["v", "n"],
+  trial_duration: 3000,
+};
+
+// Retroalimentación para la respuesta correcta
+var retro_con = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<div style="font-size:25px;color:green;">Para esta escena la respuesta correcta es <strong><black>CONGRUENTE</strong></black></div>',
+  choices: "NO_KEYS",
+  trial_duration: 2500,
+};
+
+var retro_inc = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<div style="font-size:25px;color:green;">Para esta escena la respuesta correcta es <strong><black>INCONGRUENTE</strong></black></div>',
+  choices: "NO_KEYS",
+  trial_duration: 2500,
+};
+
+// Crear un procedimiento que repita la secuencia de estímulos
+var procedimiento_practica = {
+  timeline: [fixation, practica_1, practica_response, retro_con, fixation, practica_2, practica_response, retro_inc],
+};
+
+timeline.push(procedimiento_practica);
+
+
+// Agregar cursor de nuevo después de procedimiento_practica
+var cursor_on = {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "auto";
+  }
+};
+
+timeline.push(cursor_on);
+
+//////////LOOP///////////
+
+var practica_repetida = 0; //HASTA AQUI LLEGUE con este intento, si cambia a 1 lo puedo ver en las respuestas al final pero no permite más de un loop
+
+var final_practica = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div style="font-size:25px;"><strong>¡Has concluido la práctica!</strong></p><p>Si deseas repetir las instrucciones y la práctica, selecciona repetir, de lo contrario selecciona continuar</div>',
+  choices: ['REPETIR', 'CONTINUAR'],
+  name: 'final_practica',
+  
+};
+var practica_loop = {
+  timeline: [instrucciones, inicio_practica, procedimiento_practica, final_practica],
+  conditional_function: function() {
+    var dat = jsPsych.data.getLastTrialData().values()[0];
+    var answer = dat.response; // Cambio el nombre a 'response'
+    
+    if (answer == '0' && practica_repetida < 3) { // Puedes ajustar el número máximo de repeticiones
+      practica_repetida++;
+      
+      // Agregar el valor de practica_repetida a los datos del último ensayo
+      jsPsych.data.addDataToLastTrial({ 'practica_repetida': practica_repetida });
+      
+      return true; // Continuar repitiendo el bucle
+    } else {
+      return false; // Salir del bucle
+    }
+  }
+  
+  
+};
+
+timeline.push(final_practica); // Agregar final_practica al timeline
+timeline.push(practica_loop); // Agregar practica_loop al timeline
+
+// Define un bucle conditional_loop para repetir la práctica según sea necesario
+
+// Agrega el bucle conditional_loop al timeline
+//timeline.push(practica_loop);
+
+var inicio_tarea ={
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus:'<div style="font-size:25px;"><strong>Para comenzar la tarea completa</strong><p>Coloca tus dedos sobre las teclas “V” y “N”, cuando estés list@, ¡presiona cualquiera de ellas para comenzar! :)</strong></div>',
+  choices: ["v","n"],
+};
+
+timeline.push(inicio_tarea);
+
+var cursor_off = {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "none";
+
+  }
+};
+timeline.push(cursor_off);
+
+////////////////////////////////////
+/////////INICIO FASE EXPO///////////
+////////////////////////////////////
+
+if (primer_random == 1) {
+  texto_respuestas = "<p><strong>CONGRUENTE</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>INCONGRUENTE</strong></p>"; Stim_List= Stim_List_1;
+} else if (primer_random == 2) {
+  texto_respuestas = "<p><strong>INCONGRUENTE</strong>&nbsp;&nbsp;&nbsp;<strong>CONGRUENTE</strong></p>"; Stim_List= Stim_List_2
+}
+
+/////////////ANIMATION//////////////
+
+var test_trial= {
+  type: jsPsychAnimation,
+  stimuli: jsPsych.timelineVariable('stimulus'),
+  frame_time:1500,
+  choices: "NO_KEYS",
+  render_on_canvas:true
+  
+};
+
+///////////RESPUESTAS////////////
+
+var respuestas_trial = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: texto_respuestas,
+  choices: ['n', 'v'],
+  trial_duration: 3000,
+  
+ data: { //se establecen los datos que se quieren registrar de la variable ensayo, respuesta del participante, cuál era la respuesta correcta, etc)
+     task: 'congruencia',
+     correct_response: jsPsych.timelineVariable('correct_response'),
+     tipo_estimulo: jsPsych.timelineVariable('tipo')
+    },
+    
+    on_finish: function(data){ //al finalizar cada ensayo mediante este pluginAPI se compara la respuesta asignada a 'data' que provienen de lo almacenado en task: 'response', con la respuesta corecta correct_response y se almacena en la variable data.correct
+      data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
+    }
+  }; 
+
+//////////////// PROCEDIMIENTO/////////////
+
+var procedimiento = {
+  timeline: [fixation, test_trial, respuestas_trial],
+  timeline_variables: Stim_List,
+  randomize_order: true,
+};
+
+
+timeline.push(procedimiento);
+
+//////////FIN EXPO////////////
+
+//Agregar cursor de nuevo
+var cursor_on = {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "auto";
+
+  }
+};
+timeline.push(cursor_on);
+
+
+//Conclusion_1 escrita para ahorrar archivos de imagenes
+//se le indica al participante que terminó la fase de prueba
+var conclusion_1 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p style="font-size:30px;"><strong>¡Has concluido la primera sección de la tarea!</strong><p>Para continuar, por favor presiona el botón</p>',
+  choices: ['CONTINUAR']
+};
+
+timeline.push(conclusion_1)
+
+///////////////////////////////////////////////////////
+///////INICIO SEGUNDA SECCION TAREA DE MEMORIA/////////
+///////////////////////////////////////////////////////
+
+// Seleccionar una condición aleatoria (segundo_random) para 3 opciones 
+
+var segundo_random = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3], 1)[0];
+
+jsPsych.data.addProperties({condicion_fase_2: segundo_random});
+
+
+///////instrucciones/////////////
+
+var instrucciones_teclas_1 = {
+    type: jsPsychInstructions,
+    pages: [
+    '<pstyle="font-size:23px;"><strong>¿Cómo respondo?</strong></p><p>Cada objeto se te presentará en el centro de la pantalla por un breve periodo de tiempo.</p><p>Debajo del objeto verás las tres posibles respuestas <strong>"Antiguo", "Similar", "Nuevo" en ese orden </strong>, estas opciones corresponderán a las letras en tu teclado <strong> "V", "B" y "N" respectivamente.<strong> No es necesario que memorices el orden de las opciones, </strong> podrás verlas en la parte inferior de la pantalla al contestar.</p><p>Las opciones de respuesta permanecerán, pero la imagen desaparecerá despues de <strong>3 segundos.</strong> No tienes que esperar a que desaparezca la imagen del objeto para contestar. <strong>Procura responder rápido, sin embargo, es importante que lo hagas con la mayor precisión posible.</strong></p>'+ '<br>' + 
+    '<img src="instrucciones_t_1.jpg" style="width: 710px; height: auto;"></img>'
+  ],
+  button_label_next: "CONTINUAR",
+  button_label_previous: "ANTERIOR",
+  show_clickable_nav: true,
+  allow_keys: false
+};
+
+var instrucciones_teclas_2 = {
+    type: jsPsychInstructions,
+    pages: [
+    '<pstyle="font-size:23px;"><strong>¿Cómo respondo?</strong></p><p>Cada objeto se te presentará en el centro de la pantalla por un breve periodo de tiempo.</p><p>Debajo del objeto verás las tres posibles respuestas <strong>"Similar", "Nuevo", "Antiguo" en ese orden </strong>, estas opciones corresponderán a las letras en tu teclado <strong> "V", "B" y "N" respectivamente.<strong> No es necesario que memorices el orden de las opciones, </strong> podrás verlas en la parte inferior de la pantalla al contestar. </p><p>Las opciones de respuesta permanecerán, pero la imagen desaparecerá despues de <strong>3 segundos.</strong> No tienes que esperar a que desaparezca la imagen del objeto para contestar. <strong>Procura responder rápido, sin embargo, es importante que lo hagas con la mayor precisión posible.</strong></p>'+ '<br>' + 
+    '<img src="instrucciones_t_2.jpg" style="width: 710px; height: auto;"></img>'
+  ],
+  button_label_next: "CONTINUAR",
+  button_label_previous: "ANTERIOR",
+  show_clickable_nav: true,
+  allow_keys: false
+};
+
+var instrucciones_teclas_3 = {
+    type: jsPsychInstructions,
+    pages: [
+    '<pstyle="font-size:23px;"><strong>¿Cómo respondo?</strong></p><p>Cada objeto se te presentará en el centro de la pantalla por un breve periodo de tiempo.</p><p>Debajo del objeto verás las tres posibles respuestas <strong> "Nuevo", "Antiguo", "Similar" en ese orden </strong>, estas opciones corresponderán a las letras en tu teclado <strong> "V", "B" y "N" respectivamente.<strong> No es necesario que memorices el orden de las opciones, </strong> podrás verlas en la parte inferior de la pantalla al contestar.</p><p> Las opciones de respuesta permanecerán, pero la imagen desaparecerá despues de <strong>3 segundos.</strong> No tienes que esperar a que desaparezca la imagen del objeto para contestar. <strong>Procura responder rápido, sin embargo, es importante que lo hagas con la mayor precisión posible.</strong></p>'+ '<br>' + 
+    '<img src="instrucciones_t_3.jpg" style="width: 710px; height: auto;"></img>'
+  ],
+  button_label_next: "CONTINUAR",
+  button_label_previous: "ANTERIOR",
+  show_clickable_nav: true,
+  allow_keys: false
+};
+
+var instrucciones_tarea = {
+    type:jsPsychInstructions,
+    pages: [
+    '<p>En la primera sección de la tarea se te pidió decidir a cerca de escenas y objetos.</p><p>En esta segunda sección se te presentarán una serie de imagenes de objetos.</p><p><strong>Tu tarea consiste en decidir de forma rápida y precisa para cada objeto si es: antiguo, similar o nuevo.</strong></p><p><strong>ANTIGUO:</strong> Si la imagen del objeto que observas es <strong>exactamente la misma</strong> a alguna que haya aparecido en la primera sección de la tarea.</p><p><strong>SIMILAR:</strong> Si la imagen del objeto es <strong> similar, más no idéntica </strong> a alguna que se haya presentado, esto quiere decir que puede estar representando el mismo tipo de objeto, pero con alguna(s) característica(s) diferente(s).</p><p><strong>NUEVO:</strong> Si el objeto que observas nunca se había presentado antes en la primera sección de la tarea.</p><p><strong>Presiona "continuar" para ver un ejemplo de la tarea</strong></p>',
+    '<br>' + 
+    '<img src="instrucciones_t.jpg" style="width: 1000px; height: auto;"></img>' ],
+    button_label_next: "CONTINUAR",
+    button_label_previous: "ANTERIOR",
+    show_clickable_nav: true,
+    allow_keys: false
+};
+
+timeline.push(instrucciones_tarea);
+
+var instrucciones_2;
+var texto_respuestas;
+
+if (segundo_random == 1) {
+  instrucciones_2 = instrucciones_teclas_1; texto_respuestas = "<p><strong>ANTIGUO</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>SIMILAR</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>NUEVO</strong></p>";
+} else if (segundo_random == 2) {
+  instruccione_2 = instrucciones_teclas_2; texto_respuestas = "<p><strong>SIMILAR</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>NUEVO</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>ANTIGUO</strong></p>";
+} else if (segundo_random == 3) {
+  instrucciones_2 = instrucciones_teclas_3; texto_respuestas = "<p><strong>NUEVO</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>ANTIGUO</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>SIMILAR</strong></p>";
+}
+
+timeline.push(instrucciones_2);
+
+var cursor_off = {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "none";
+
+  }
+};
+timeline.push(cursor_off);
+
+
+////inicio de la práctica///////////
+
+var inicio_practica_2 = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<div style="font-size:22px;"><p>Antes de comenzar podrás realizar una breve práctica para familiarizarte con la tarea.</p><p>No te preocupes por las respuestas, por esta ocasión selecciona la opcion de "nuevo", el objetivo es que identifiques la dinámica de la actividad.</p><p>Coloca tus dedos sobre las teclas “V”, "B" y “N”,</p><strong><p>cuando estés list@, presiona cualquiera de ellas para comenzar la práctica :)</p> </strong></div>',
+  choices: ["v","n","b"],
+};
+
+timeline.push(inicio_practica_2);
+
+var objeto_1 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: "objeto_1.jpg",
+  stimulus_height: 650,
+  maintain_aspect_ratio: true,
+    prompt: '<div style="text-align: center;">' + texto_respuestas + '</div>',
+    choices: ["V","N","B"],
+  trial_duration: 3000,
+
+};
+  
+var objeto_2 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: "objeto_2.jpg",
+  stimulus_height: 650,
+  maintain_aspect_ratio: true,
+    prompt: '<div style="text-align: center;">' + texto_respuestas + '</div>',
+    choices: ["V","N","B"],
+  trial_duration: 3000,
+  
+};
+
+var procedimiento_practica_2 = {
+  timeline: [fixation, objeto_1, fixation, objeto_2],
+};
+
+timeline.push(procedimiento_practica_2) 
+
+var cursor_on = {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "auto";
+  }
+};
+
+timeline.push(cursor_on);
+
+//////////LOOP///////////
+
+var practica_repetida_2 = 0; //hASTA AQUI LLEGUE con este intento de que se repita las veces que sea la práctica, si cambia a 1 lo puedo ver en las respuestas al final pero no permite más de un loop
+
+var final_practica_2 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div style="font-size:22px;"><strong>¡Has concluido la práctica!</strong></p><p>Si deseas repetir las instrucciones y la práctica, selecciona repetir, de lo contrario selecciona continuar</div>',
+  choices: ['repetir', 'continuar'],
+  name: 'final_practica_2',
+  
+};
+var practica_loop_2 = {
+  timeline: [instrucciones_tarea, instrucciones_2, inicio_practica_2, procedimiento_practica_2, final_practica_2],
+  conditional_function: function() {
+    var dat = jsPsych.data.getLastTrialData().values()[0];
+    var answer = dat.response; // Cambio el nombre a 'response'
+    
+    if (answer == '0' && practica_repetida_2 < 3) { // Puedes ajustar el número máximo de repeticiones
+      practica_repetida_2++;
+      
+      // Agregar el valor de practica_repetida a los datos del último ensayo
+      jsPsych.data.addDataToLastTrial({ 'practica_repetida_2': practica_repetida_2 });
+      
+      return true; // Continuar repitiendo el bucle
+    } else {
+      return false; // Salir del bucle
+    }
+  }
+  
+  
+};
+
+timeline.push(final_practica_2); // Agregar final_practica al timeline
+timeline.push(practica_loop_2); // Agregar practica_loop al timeline
+
+var inicio_tarea_memoria ={
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus:'<div style="font-size:25px;"><strong>Para comenzar la tarea completa</strong><p>Coloca tus dedos sobre las teclas “V” "B" y “N” <p>Cuando estés list@, ¡presiona cualquiera de ellas para comenzar! :)</p></strong></div>',
+  choices: ["v","n","b"],
+};
+
+timeline.push(inicio_tarea_memoria);
+
+//Quitar cursor utilizando un estilo css cargado como "no_mouse.css"
+var cursor_off = {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "none";
+
+  }
+};
+timeline.push(cursor_off);
+
+////////////////////////////////////
+/////////INICIO TAREA MEMORIA ///////////
+////////////////////////////////////
+
+var pruebaT={
+    type:jsPsychImageKeyboardResponse,
+    stimulus:jsPsych.timelineVariable("stimulus"),
+    stimulus_height: 500,
+    stimulus_duration: 3000,
+    maintain_aspect_ratio: true,
+    prompt: '<div style="text-align: center;">' + texto_respuestas + '</div>',
+    choices: ["V","N","B"],
+    save_trial_parameters: {
+    stimulus: true,
+    prompt: true //agregué el promt para ver el orden de presentación aunque lo conserva la ondición también
+    //choices: true, //No necesito guardar las choices porque son siempre las mismas no tiene que ver con el orden 
+      },
+      
+  data: { //se establecen los datos que se quieren registrar de la variable ensayo, respuesta del participante, cuál era la respuesta correcta, etc)
+     task: 'response',
+     tipo: jsPsych.timelineVariable('tipo'),
+     contexto: jsPsych.timelineVariable('contexto'),
+     correct_response: jsPsych.timelineVariable('correct_response'),
+    },
+    
+    on_finish: function(data){ //al finalizar cada ensayo mediante este pluginAPI se compara la respuesta asignada a 'data' que provienen de lo almacenado en task: 'response', con la respuesta corecta correct_response y se almacena en la variable data.correct
+      data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
+      data.antiguo = jsPsych.pluginAPI.compareKeys(data.response, jsPsych.timelineVariable('antiguo'));
+      data.similar = jsPsych.pluginAPI.compareKeys(data.response, jsPsych.timelineVariable('similar'));
+      data.nuevo = jsPsych.pluginAPI.compareKeys(data.response, jsPsych.timelineVariable('nuevo'));
+    }
+  }; 
+
+var cursor_off = {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "none";
+
+  }
+};
+timeline.push(cursor_off);
+
+var procedimiento_2= {
+    timeline:[ fixation, pruebaT],
+    randomize_order:true
+};
+
+//creo que esto podría adjuntarse en el otro condicional pero por ahora lo dejo así, porque visualmente me ayuda
+if (segundo_random == 1) {
+  procedimiento_2.timeline_variables = stim_list_T_1;
+} else if (segundo_random == 2) {
+  procedimiento_2.timeline_variables = stim_list_T_2;
+} else if (segundo_random == 3) {
+  procedimiento_2.timeline_variables = stim_list_T_3;
+};
+
+timeline.push(procedimiento_2);
+
+var cursor_on= {
+  type: jsPsychCallFunction,
+  func: function(){
+    document.body.style.cursor = "auto";
+
+  }
+};
+timeline.push(cursor_on);
+
+/////////////////////////////////
+////////Final y preguntas////////
+/////////////////////////////////
+
+
+var conclusion_2 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p style="font-size:30px"><strong>¡Gracias por tus respuestas!</strong></p><p>Para finalizar, por favor responde algunas preguntas acerca de tu experiencia en esta tarea</p>',
+  choices: ['CONTINUAR']
+};
+
+timeline.push(conclusion_2);
+
+var problemas = {
+type: jsPsychSurveyMultiChoice,
+  button_label:"CONTINUAR",
+  
+  questions: [
+    {
+      prompt: "<div style='font-size: 20px;'><strong>¿Tuviste algún contratiempo (por ejemplo, problemas con tu computadora) que pudiera haber afectado tus respuestas?</strong></div>", 
+      name: 'problemas', 
+      options: ['SI', 'NO'], 
+      required: true,
+    }
+  ],
+};
+
+var dificultad ={
+  type: jsPsychSurveyMultiChoice,
+  button_label:"CONTINUAR",
+  
+  questions: [
+    {
+      prompt: "<div style='font-size: 20px;'><strong>En general, ¿la dificultad de esta tarea te pareció: fácil, media, o difícil?</strong></div>", 
+      name: 'dificultad', 
+      options: ['FACIL', 'MEDIA', 'DIFICIL'], 
+      required: true,
+    }
+  ],
+};
+
+var recuerdo = {
+  type:jsPsychSurveyText,
+  button_label:"CONTINUAR",
+  name: 'recuerdo',
+  preamble: "<div style='font-size: 20px;'><strong>¿Consideras que te fue más sencillo recordar ciertos objetos en comparación con otros?</strong></div>",
+  questions: [
+    {prompt: '<p>Si la respuesta es afirmativa escribe "SI" y por favor describe cuáles objetos y por qué crees que fueron más sencillos de recordar</p> <p> si la respuesta es negativa solo escribe "NO" </p> ',
+    name: 'recuerdo', 
+    required: true,
+    },
+  ]
+};
+  
+var estrategia = {
+  type:jsPsychSurveyText,
+  button_label:"CONTINUAR",
+  name: 'estrategia',
+  preamble: "<div style='font-size: 20px;'><strong>¿Utilizaste alguna estrategia en particular para intentar recordar los objetos y responder si era Antiguo, Similar, o Nuevo?</strong></div>",
+  questions: [
+    {prompt: '<p>Si la respuesta es afirmativa escribe "SI" y por favor describe en qué consistió tu estrategia</p><p> Si la respuesta es negativa solo escribe "NO" </p> ',
+    name: 'estrategia', 
+    required: true,
+    },
+  ]
+};
+
+var extra = {
+  type:jsPsychSurveyText,
+  button_label:"CONTINUAR",
+  preamble: "<div style='font-size: 20px;'><strong>Si tienes algún comentario o sugerencia por favor escríbelo, será bien recibido</strong></div>",
+  questions: [
+    {prompt: 'Si no es el caso, puedes presionar unicamente el botón de "CONTINUAR"',
+    name: 'extra',
+    required: false,
+    },
+  ]
+};
+
+var despedida= {
+  type:jsPsychHtmlButtonResponse,
+  stimulus: "<div style='font-size: 30px;'><p>La tarea ha terminado</p><p><strong>¡Muchas gracias por tu partipación!<p> :) </p></strong></div>",
+  choices: ['SALIR']
+};
+
+timeline.push(problemas,dificultad,recuerdo,estrategia,extra,despedida);
+
+//////////////////////////////////////////////
+///////// TERMINA EXPERIMENTO ////////////////
+//////////////////////////////////////////////
+
+timeline.push({
+  type: jsPsychFullscreen,
+  fullscreen_mode: false
+});
+
+timeline.push({
+  type: jsPsychHtmlKeyboardResponse,  
+  stimulus: 'Hasta pronto'
+});
+
+jsPsych.run(timeline);
+
+    
   </script>
 </html>
