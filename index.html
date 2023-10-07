@@ -34,18 +34,9 @@
 var timeline = [];
 
 // Se inicializa jsPsych y se presentan los datos al finalizar el experimento
-var jsPsych = initJsPsych({
-    on_finish: function() {
-      jsPsych.data.displayData();
-    }
-});
+var jsPsych = initJsPsych({});
 //var jsPsych = initJsPsych();
 
-/* Se genera un ID para cada participante de forma aleatoria con 8 caracteres alfanuméricos */
-
-var rand_subject_id = jsPsych.randomization.randomID(8);
-/* Agregar el ID del participante a los datos de cada ensayo */
-jsPsych.data.addProperties({ID: rand_subject_id});
 
 
 
@@ -60,27 +51,6 @@ var aviso = {
 timeline.push(aviso);
 
 
-
-// Pantalla completa
-timeline.push({
-  type: jsPsychFullscreen,
-  message: "<p>Presiona el botón para cambiar a pantalla completa<p>",
-  button_label:	'CONTINUAR',
-  fullscreen_mode: true
-});
-
-
-
-
-
-//////////////////////////////////////////////
-///////// TERMINA EXPERIMENTO ////////////////
-//////////////////////////////////////////////
-
-timeline.push({
-  type: jsPsychFullscreen,
-  fullscreen_mode: false
-});
 
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,  
